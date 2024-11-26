@@ -36,9 +36,9 @@ classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "trai
 
 # Alert function to send email
 def send_email_alert():
-    sender_email = "ganeshakabhagwaan@gmail.com"
-    receiver_email = "tanmaygupta2610@gmail.com"
-    password = "rozc zguq arav lhqp"
+    sender_email = os.getenv('SENDER_EMAIL')
+    receiver_email = os.getenv('RECEIVER_EMAIL')
+    password = os.getenv('EMAIL_PASSWORD')
 
     message = MIMEText("Intruder detected!")
     message['Subject'] = "Security Alert"
@@ -71,7 +71,7 @@ def video_feed():
             if not success:
                 break
 
-            results = model(frame)  # Run YOLO detection
+            results = model(frame,verbose=False)  # Run YOLO detection
 
             for r in results:
                 boxes = r.boxes
@@ -98,6 +98,8 @@ def video_feed():
             # Encode the frame to send as a response
             _, buffer = cv2.imencode('.jpg', frame)
             frame_bytes = buffer.tobytes()
+
+            # Yield the frame to the Flask route
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
 
@@ -106,3 +108,4 @@ def video_feed():
 # Run the Flask app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
