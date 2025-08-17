@@ -29,7 +29,7 @@ alert_triggered = False
 def send_email_alert():
     sender_email = "ganeshakabhagwaan@gmail.com"  
     receiver_email = "tanmaypandita111@gmail.com"  
-    password = "rozc zguq arav lhqp"  
+    password = "******************"  
 
     message = MIMEText("Intruder detected!")
     message['Subject'] = "Security Alert"
@@ -127,3 +127,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
